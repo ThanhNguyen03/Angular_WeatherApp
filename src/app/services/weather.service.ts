@@ -8,13 +8,20 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class WeatherService {
-  private weatherApiBaseUrl: string = environment.weatherApiBaseUrl;
-  private XRapidAPIKeyHeaderName: string = environment.XRapidAPIKeyHeaderName;
-  private XRapidAPIKeyHeaderValue: string = environment.XRapidAPIKeyHeaderValue;
-  private XRapidAPIHostHeaderName: string = environment.XRapidAPIHostHeaderName;
-  private XRapidAPIHostHeaderValue: string = environment.XRapidAPIHostHeaderValue;
+  private weatherApiBaseUrl: string;
+  private XRapidAPIKeyHeaderName: string;
+  private XRapidAPIKeyHeaderValue: string;
+  private XRapidAPIHostHeaderName: string;
+  private XRapidAPIHostHeaderValue: string;
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { 
+    // Kiểm tra xem biến môi trường weatherApiBaseUrl có được định nghĩa không
+    this.weatherApiBaseUrl = process.env['weatherApiBaseUrl'] || environment.weatherApiBaseUrl;
+    this.XRapidAPIKeyHeaderName = process.env['XRapidAPIKeyHeaderName'] || environment.XRapidAPIKeyHeaderName;
+    this.XRapidAPIKeyHeaderValue = process.env['XRapidAPIKeyHeaderValue'] || environment.XRapidAPIKeyHeaderValue;
+    this.XRapidAPIHostHeaderName = process.env['XRapidAPIHostHeaderName'] || environment.XRapidAPIHostHeaderName;
+    this.XRapidAPIHostHeaderValue = process.env['XRapidAPIHostHeaderValue'] || environment.XRapidAPIHostHeaderValue;
+  }
 
   getWeatherData(cityName: string): Observable<WeatherData> {
     return this.http.get<WeatherData>(this.weatherApiBaseUrl, {
