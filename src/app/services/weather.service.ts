@@ -1,35 +1,30 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { WeatherData } from '../models/weather.model';
 import { Observable } from 'rxjs';
+import { WeatherData } from '../models/weather.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WeatherService {
-  private weatherApiBaseUrl: string;
-  private XRapidAPIKeyHeaderName: string;
-  private XRapidAPIKeyHeaderValue: string;
-  private XRapidAPIHostHeaderName: string;
-  private XRapidAPIHostHeaderValue: string;
 
-  constructor(private http: HttpClient) { 
-    // Kiểm tra xem biến môi trường weatherApiBaseUrl có được định nghĩa không
-    this.weatherApiBaseUrl = process.env['weatherApiBaseUrl'] || environment.weatherApiBaseUrl;
-    this.XRapidAPIKeyHeaderName = process.env['XRapidAPIKeyHeaderName'] || environment.XRapidAPIKeyHeaderName;
-    this.XRapidAPIKeyHeaderValue = process.env['XRapidAPIKeyHeaderValue'] || environment.XRapidAPIKeyHeaderValue;
-    this.XRapidAPIHostHeaderName = process.env['XRapidAPIHostHeaderName'] || environment.XRapidAPIHostHeaderName;
-    this.XRapidAPIHostHeaderValue = process.env['XRapidAPIHostHeaderValue'] || environment.XRapidAPIHostHeaderValue;
-  }
+  constructor(private http: HttpClient) { }
 
   getWeatherData(cityName: string): Observable<WeatherData> {
-    return this.http.get<WeatherData>(this.weatherApiBaseUrl, {
+    const apiBaseUrl = environment.production ? process.env['WEATHER_API_BASE_URL'] : environment.weatherApiBaseUrl;
+    const apiKeyHeaderName = environment.production ? process.env['XRapidAPIKeyHeaderName'] : environment.XRapidAPIKeyHeaderName;
+    const apiKeyHeaderValue = environment.production ? process.env['XRapidAPIKeyHeaderValue'] : environment.XRapidAPIKeyHeaderValue;
+    const apiHostHeaderName = environment.production ? process.env['XRapidAPIHostHeaderName'] : environment.XRapidAPIHostHeaderName;
+    const apiHostHeaderValue = environment.production ? process.env['XRapidAPIHostHeaderValue'] : environment.XRapidAPIHostHeaderValue;
+
+    return this.http.get<WeatherData>(apiBaseUrl, {
       headers: new HttpHeaders()
-        .set(this.XRapidAPIKeyHeaderName, this.XRapidAPIKeyHeaderValue)
-        .set(this.XRapidAPIHostHeaderName, this.XRapidAPIHostHeaderValue),
+        .set(apiKeyHeaderName, apiKeyHeaderValue)
+        .set(apiHostHeaderName, apiHostHeaderValue),
       params: new HttpParams()
         .set('q', cityName)
     });
   }
+
 }
