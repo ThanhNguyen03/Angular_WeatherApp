@@ -8,17 +8,21 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class WeatherService {
+  private weatherApiBaseUrl: string = environment.weatherApiBaseUrl;
+  private XRapidAPIKeyHeaderName: string = environment.XRapidAPIKeyHeaderName;
+  private XRapidAPIKeyHeaderValue: string = environment.XRapidAPIKeyHeaderValue;
+  private XRapidAPIHostHeaderName: string = environment.XRapidAPIHostHeaderName;
+  private XRapidAPIHostHeaderValue: string = environment.XRapidAPIHostHeaderValue;
 
   constructor(private http:HttpClient) { }
 
   getWeatherData(cityName: string): Observable<WeatherData> {
-    return this.http.get<WeatherData>(environment.weatherApiBaseUrl, {
+    return this.http.get<WeatherData>(this.weatherApiBaseUrl, {
       headers: new HttpHeaders()
-        .set(environment.XRapidAPIKeyHeaderName, environment.XRapidAPIKeyHeaderValue)
-        .set(environment.XRapidAPIHostHeaderName, environment.XRapidAPIHostHeaderValue),
+        .set(this.XRapidAPIKeyHeaderName, this.XRapidAPIKeyHeaderValue)
+        .set(this.XRapidAPIHostHeaderName, this.XRapidAPIHostHeaderValue),
       params: new HttpParams()
         .set('q', cityName)
     });
   }
-  
 }
