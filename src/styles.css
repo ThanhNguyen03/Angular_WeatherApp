@@ -1,1 +1,27 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+div.light {
+    background: rgb(219,95,33);
+    background: linear-gradient(0deg, rgba(219,95,33,1) 0%, rgba(236,62,31,1) 35%, rgba(235,231,125,1) 100%);
+}
+
+div.dark {
+    background: rgb(18,62,137);
+    background: linear-gradient(0deg, rgba(18,62,137,1) 0%, rgba(54,115,85,1) 35%, rgba(39,49,100,1) 100%);
+}
+
+.shadow-custom {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 14px 28px, rgba(0, 0, 0, 0.3) 10px 10px 30px;
+}
+
+div.card {
+    @apply grid;
+    grid-template-rows: 4fr 6fr;
+}
