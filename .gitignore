@@ -38,8 +38,6 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
-postcss.config.js
-tailwind.config.js
 
 # System files
 .DS_Store
