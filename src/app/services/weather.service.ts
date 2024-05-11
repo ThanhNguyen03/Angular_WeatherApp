@@ -12,11 +12,11 @@ export class WeatherService {
   constructor(private http: HttpClient) { }
 
   getWeatherData(cityName: string): Observable<WeatherData> {
-    const apiBaseUrl = environment.production ? process.env['WEATHER_API_BASE_URL'] : environment.weatherApiBaseUrl;
-    const apiKeyHeaderName = environment.production ? process.env['XRapidAPIKeyHeaderName'] : environment.XRapidAPIKeyHeaderName;
-    const apiKeyHeaderValue = environment.production ? process.env['XRapidAPIKeyHeaderValue'] : environment.XRapidAPIKeyHeaderValue;
-    const apiHostHeaderName = environment.production ? process.env['XRapidAPIHostHeaderName'] : environment.XRapidAPIHostHeaderName;
-    const apiHostHeaderValue = environment.production ? process.env['XRapidAPIHostHeaderValue'] : environment.XRapidAPIHostHeaderValue;
+    const apiBaseUrl = process.env['WEATHER_API_BASE_URL'];
+    const apiKeyHeaderName = process.env['XRapidAPIKeyHeaderName'];
+    const apiKeyHeaderValue = process.env['XRapidAPIKeyHeaderValue'];
+    const apiHostHeaderName = process.env['XRapidAPIHostHeaderName'];
+    const apiHostHeaderValue = process.env['XRapidAPIHostHeaderValue'];
 
     return this.http.get<WeatherData>(apiBaseUrl, {
       headers: new HttpHeaders()
