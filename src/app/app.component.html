@@ -1,14 +1,14 @@
 <div *ngIf="weatherData" class="w-full flex flex-col justify-center items-center h-[100vh]">
     <img src="../assets/Night Hill Animated.gif" class="object-cover w-full h-full absolute" *ngIf="weatherData.current.is_day === 0">
     <img src="../assets/day.jpg" class="object-cover w-full h-full absolute" *ngIf="weatherData.current.is_day === 1">
-    <div class="w-[20%] flex mx-auto z-10 absolute top-0 mt-10">
+    <div class="xl:w-[20%] w-[70%] flex mx-auto z-30 absolute top-0 mt-10">
         <form class="w-full flex items-center justify-center" (submit)="onSubmit()">
             <input type="text" placeholder="Search city..." class="w-full p-2 rounded-full pl-4 placeholder:text-white border-2" name="city"
             [(ngModel)]="cityName"
             [ngClass]="{ 'bg-violet border-red-600 focus:border-red-900 focus:outline-none': weatherData.current.is_day === 1, 'bg-lavender border-purple-600 focus:border-purple-900 focus:outline-none': weatherData.current.is_day === 0 }" >         
         </form>
     </div>
-    <div class="min-w-[30%] h-fit rounded-lg shadow-custom card z-10">
+    <div class="min-w-[30%] h-fit rounded-lg shadow-custom card z-10 mx-10 mt-14">
         <div class="overflow-hidden relative rounded-t-lg w-full h-full">
             <img src="../assets/cold.gif" class="object-cover w-full h-full absolute" *ngIf="weatherData.current.temp_c <= 15">
             <img src="../assets/hot.jpg" class="object-cover w-full h-full absolute" *ngIf="weatherData.current.temp_c > 15">
@@ -64,12 +64,14 @@
                             <span class="text-sm">UV</span>
                         </div>
                         <div class="flex items-center font-semibold">
-                            {{weatherData.current.uv}} &nbsp; (
-                            <p *ngIf="weatherData.current.uv <= 2">Low</p>
-                            <p *ngIf="weatherData.current.uv > 2 && weatherData.current.uv <= 5">Medium</p>
-                            <p *ngIf="weatherData.current.uv > 5 && weatherData.current.uv <= 7">High</p>
-                            <p *ngIf="weatherData.current.uv > 7 && weatherData.current.uv <= 10">Very High</p>
-                            <p *ngIf="weatherData.current.uv > 10">Extreme</p>)
+                            {{weatherData.current.uv}} &nbsp; 
+                            <div class="hidden md:block">
+                                <p *ngIf="weatherData.current.uv <= 2">(Low)</p>
+                                <p *ngIf="weatherData.current.uv > 2 && weatherData.current.uv <= 5">(Medium)</p>
+                                <p *ngIf="weatherData.current.uv > 5 && weatherData.current.uv <= 7">(High)</p>
+                                <p *ngIf="weatherData.current.uv > 7 && weatherData.current.uv <= 10">(Very High)</p>
+                                <p *ngIf="weatherData.current.uv > 10">(Extreme)</p>
+                            </div>
                         </div>
                     </div>
                     <div class="flex gap-4 h-full">
